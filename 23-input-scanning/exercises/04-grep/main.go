@@ -8,6 +8,13 @@
 
 package main
 
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
 // ---------------------------------------------------------
 // EXERCISE: Grep Clone
 //
@@ -34,4 +41,19 @@ package main
 // ---------------------------------------------------------
 
 func main() {
+	in := bufio.NewScanner(os.Stdin)
+
+	// Collect all command-line arguments as patterns
+	patterns := os.Args[1:]
+
+	for in.Scan() {
+		s := in.Text()
+		// Check if any of the patterns are present in the line
+		for _, pattern := range patterns {
+			if strings.Contains(s, pattern) {
+				fmt.Printf("Found the word \"%s\" in sentence: %s\n", pattern, s)
+				break // Stop checking other patterns if one is found
+			}
+		}
+	}
 }
